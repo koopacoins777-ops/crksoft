@@ -87,7 +87,7 @@ export default function BreathingContextProvider({
       breathCount: result.breathCount,
       totalRounds: result.totalRounds,
       maxRetentionMs: result.maxRetentionMs,
-      retentionTimes: result.retentionTimes,
+      retentionTimes: JSON.stringify(result.retentionTimes),
     };
     setOptimisticSessions(optimistic);
 

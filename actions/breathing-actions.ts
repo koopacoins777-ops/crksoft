@@ -16,7 +16,11 @@ export async function saveBreathingSession(data: unknown) {
   try {
     await prisma.breathingSession.create({
       data: {
-        ...validated.data,
+        roundsCompleted: validated.data.roundsCompleted,
+        breathCount: validated.data.breathCount,
+        totalRounds: validated.data.totalRounds,
+        maxRetentionMs: validated.data.maxRetentionMs,
+        retentionTimes: JSON.stringify(validated.data.retentionTimes),
         userId: session.user.id,
       },
     });

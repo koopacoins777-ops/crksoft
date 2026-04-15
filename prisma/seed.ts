@@ -6,6 +6,7 @@ const prisma = new PrismaClient();
 const userData: Prisma.UserCreateInput = {
   email: "example@gmail.com",
   hashedPassword: "",
+  hasAccess: true,
   pets: {
     create: [
       {

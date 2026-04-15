@@ -54,6 +54,7 @@ export const breathingSessionSchema = z.object({
   totalRounds: z.number().int().min(2).max(4),
   maxRetentionMs: z.number().int().nonnegative(),
   retentionTimes: z.array(z.number().int().nonnegative()),
+  // retentionTimes stored as JSON string in DB for SQLite compat
 });
 
 export type TBreathingSession = z.infer<typeof breathingSessionSchema>;
