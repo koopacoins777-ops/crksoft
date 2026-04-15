@@ -17,13 +17,36 @@ datasource db {
 }
 
 model User {
-  id             String   @id @default(cuid())
-  email          String   @unique
-  hashedPassword String
-  hasAccess      Boolean  @default(false)
-  pets           Pet[]
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id                 String              @id @default(cuid())
+  email              String              @unique
+  hashedPassword     String
+  hasAccess          Boolean             @default(false)
+  pets               Pet[]
+  breathingSessions  BreathingSession[]
+  breathingSettings  BreathingSettings?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+}
+
+model BreathingSession {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  roundsCompleted Int
+  breathCount     Int
+  totalRounds     Int
+  maxRetentionMs  Int
+  retentionTimes  Int[]
+  completedAt     DateTime @default(now())
+}
+
+model BreathingSettings {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id])
+  breathCount Int      @default(30)
+  roundCount  Int      @default(3)
+  updatedAt   DateTime @updatedAt
 }
 
 model Pet {
