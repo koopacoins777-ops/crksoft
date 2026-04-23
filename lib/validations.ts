@@ -45,3 +45,23 @@ export const authSchema = z.object({
 });
 
 export type TAuth = z.infer<typeof authSchema>;
+
+export const breathingSessionSchema = z.object({
+  roundsCompleted: z.number().int().min(1).max(4),
+  breathCount: z.number().int().refine((v) => [30, 35, 40].includes(v), {
+    message: "breathCount must be 30, 35, or 40",
+  }),
+  totalRounds: z.number().int().min(2).max(4),
+  maxRetentionMs: z.number().int().nonnegative(),
+  retentionTimes: z.array(z.number().int().nonnegative()),
+  // retentionTimes stored as JSON string in DB for SQLite compat
+});
+
+export type TBreathingSession = z.infer<typeof breathingSessionSchema>;
+
+export const breathingSettingsSchema = z.object({
+  breathCount: z.union([z.literal(30), z.literal(35), z.literal(40)]),
+  roundCount: z.union([z.literal(2), z.literal(3), z.literal(4)]),
+});
+
+export type TBreathingSettings = z.infer<typeof breathingSettingsSchema>;

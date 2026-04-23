@@ -41,3 +41,14 @@ export async function getPetsByUserId(userId: User["id"]) {
 
   return pets;
 }
+
+export async function getBreathingData(userId: User["id"]) {
+  const [sessions, settings] = await Promise.all([
+    prisma.breathingSession.findMany({
+      where: { userId },
+      orderBy: { completedAt: "desc" },
+    }),
+    prisma.breathingSettings.findUnique({ where: { userId } }),
+  ]);
+  return { sessions, settings };
+}
